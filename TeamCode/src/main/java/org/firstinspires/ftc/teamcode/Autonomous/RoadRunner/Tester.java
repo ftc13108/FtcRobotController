@@ -1,35 +1,44 @@
 /*
- * Copyright (c) 2021 OpenFTC Team
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
+* Copyright (c) 2021 OpenFTC Team
+        *
+        * Permission is hereby granted, free of charge, to any person obtaining a copy
+        * of this software and associated documentation files (the "Software"), to deal
+        * in the Software without restriction, including without limitation the rights
+        * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        * copies of the Software, and to permit persons to whom the Software is
+        * furnished to do so, subject to the following conditions:
+        *
+        * The above copyright notice and this permission notice shall be included in all
+        * copies or substantial portions of the Software.
+        * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        * SOFTWARE.
+        */
 
-package org.firstinspires.ftc.teamcode.Autonomous.RoadRunner;
+        package org.firstinspires.ftc.teamcode.Autonomous.RoadRunner;
 
 import static java.lang.Math.PI;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Autonomous.AprilTagDetectionPipeline;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -37,7 +46,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name="RRTester",group="auto")
+@Autonomous(name="RRtest+cam",group="RRauto")
 public class Tester extends LinearOpMode {
     //not camera stuff
     DcMotorEx BLmotor, BRmotor, FLmotor, FRmotor, Xrail;
@@ -116,7 +125,8 @@ public class Tester extends LinearOpMode {
         gripperL.setDirection(Servo.Direction.REVERSE);
 
         //init
-
+        gripperL.setPosition(.1);
+        gripperR.setPosition(.1);
 
 
         //end of not camera stuff
@@ -140,6 +150,14 @@ public class Tester extends LinearOpMode {
         });
 
         telemetry.setMsTransmissionInterval(50);
+
+        //RoadRunnerStuff
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
+        Trajectory SimpleTrajectory = drive.trajectoryBuilder(new Pose2d())
+                .strafeRight(5)
+                .forward(5)
+                .build();
 
         /*
          * The INIT-loop:
@@ -205,22 +223,20 @@ public class Tester extends LinearOpMode {
         }
 
         /* Actually do something useful */
-        if (tagOfInterest == null){
-            //trajectory
-
-        } else if(tagOfInterest.id == LEFT)
+        if (tagOfInterest == null|| tagOfInterest.id == LEFT)
         {
             //trajectory
+            drive.followTrajectory(SimpleTrajectory);
 
         } else if (tagOfInterest.id == MIDDLE) {
             //trajectory
-
 
         } else if (tagOfInterest.id == RIGHT) {
             //trajectory
 
 
         }
+
 
     }
 
@@ -236,6 +252,35 @@ public class Tester extends LinearOpMode {
 
     //end of camera stuff
     //not camera stuff
+    public void XrailMove(double power, double Inches) {
+        double TicksPerRevolution = 537.7;
+        // diameter Millimeters
+        double DiameterMM = 38.1;
+        // diameter Inches
+        double DiameterIn = DiameterMM / 25.4; //3.7795275590551185 Inches
+        // Circumference
+        double Circumference = DiameterIn * PI; //11.873736013567724 Inches
+        // Finding ticks per inch
+        double TicksPerInch = TicksPerRevolution / Circumference; //45.28482015985433 Inches
+
+        int distance = (int) (Inches * TicksPerInch);
+
+        Xrail.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        Xrail.setTargetPosition(distance);
+        Xrail.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        Xrail.setPower(power);
+
+        while (Xrail.isBusy()) {
+        }
+        Xrail.setPower(0);
+        Xrail.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void grippers(double position){
+        gripperL.setPosition(position);
+        gripperR.setPosition(position);
+    }
+
 
 }
 

@@ -216,17 +216,17 @@ public class BlueA5All extends LinearOpMode {
             //trajectory
             XrailMove(.3,3);
             forward(.4,2);
-            Sleft(.3,7.25);
-            forward(.4,5.1);
+            Sleft(.3,7.55);
+            forward(.4,3.7);
             sleep(500);
             XrailMove(.5,11);
             sleep(100);
-            forward(.2,1.3);
+            forward(.2,1.1);
             grippers(.9);
             sleep(500);
             XrailMove(.3,-8);
             sleep(100);
-            backwards(.2,1);
+            backwards(.2,1.2);
             Sright(.3,10);
             forward(.4,22);
             Sright(.3,22);
@@ -235,17 +235,17 @@ public class BlueA5All extends LinearOpMode {
             //trajectory
             XrailMove(.3,3);
             forward(.4,2);
-            Sleft(.3,7.25);
-            forward(.4,5.1);
+            Sleft(.3,7.55);
+            forward(.4,3.7);
             sleep(500);
             XrailMove(.5,11);
             sleep(100);
-            forward(.2,1.3);
+            forward(.2,1.1);
             grippers(.9);
             sleep(500);
             XrailMove(.3,-8);
             sleep(100);
-            backwards(.2,1);
+            backwards(.2,1.2);
             Sright(.3,10);
             forward(.4,22);
 
@@ -253,17 +253,17 @@ public class BlueA5All extends LinearOpMode {
             //trajectory
             XrailMove(.3,3);
             forward(.4,2);
-            Sleft(.3,7.25);
-            forward(.4,5.1);
+            Sleft(.3,7.55);
+            forward(.4,3.7);
             sleep(500);
             XrailMove(.5,11);
             sleep(100);
-            forward(.2,1.3);
+            forward(.2,1.1);
             grippers(.9);
             sleep(500);
             XrailMove(.3,-8);
             sleep(100);
-            backwards(.2,1);
+            backwards(.2,1.2);
             Sright(.3,10);
             forward(.4,22);
             Sleft(.3,22);

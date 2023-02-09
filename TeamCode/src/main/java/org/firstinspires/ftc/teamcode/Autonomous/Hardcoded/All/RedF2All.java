@@ -207,26 +207,22 @@ public class RedF2All extends LinearOpMode {
         }
 
         /* Actually do something useful */
-        if (tagOfInterest == null){
-            //trajectory
-            forward(.2,4);
-            Sright(.2,6);
-        } else if(tagOfInterest.id == LEFT)
-        {
+        if (tagOfInterest == null || tagOfInterest.id == LEFT){
+
             //trajectory
             XrailMove(.3,3);
             forward(.4,2);
-            Sleft(.3,7.25);
-            forward(.4,5.3);
+            Sleft(.3,7.55);
+            forward(.4,3.8);
             sleep(500);
             XrailMove(.5,11);
             sleep(100);
-            forward(.2,1);
+            forward(.2,.9);
             grippers(.9);
             sleep(500);
             XrailMove(.3,-8);
             sleep(100);
-            backwards(.2,1);
+            backwards(.2,1.2);
             Sright(.3,10);
             forward(.4,22);
             Sright(.3,20);
@@ -235,17 +231,17 @@ public class RedF2All extends LinearOpMode {
             //trajectory
             XrailMove(.3,3);
             forward(.4,2);
-            Sleft(.3,7.25);
-            forward(.4,5.3);
+            Sleft(.3,7.55);
+            forward(.4,3.8);
             sleep(500);
             XrailMove(.5,11);
             sleep(100);
-            forward(.2,1);
+            forward(.2,.9);
             grippers(.9);
             sleep(500);
             XrailMove(.3,-8);
             sleep(100);
-            backwards(.2,1);
+            backwards(.2,1.2);
             Sright(.3,10);
             forward(.4,22);
 
@@ -253,17 +249,17 @@ public class RedF2All extends LinearOpMode {
             //trajectory
             XrailMove(.3,3);
             forward(.4,2);
-            Sleft(.3,7.25);
-            forward(.4,5.3);
+            Sleft(.3,7.55);
+            forward(.4,3.8);
             sleep(500);
             XrailMove(.5,11);
             sleep(100);
-            forward(.2,1);
+            forward(.2,.9);
             grippers(.9);
             sleep(500);
             XrailMove(.3,-8);
             sleep(100);
-            backwards(.2,1);
+            backwards(.2,1.2);
             Sright(.3,10);
             forward(.4,22);
             Sleft(.3,20);

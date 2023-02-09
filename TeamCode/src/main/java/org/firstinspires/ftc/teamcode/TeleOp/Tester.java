@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+import static java.lang.Math.PI;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -65,8 +67,7 @@ public class Tester extends LinearOpMode {
         gripperL.setDirection(Servo.Direction.REVERSE);
 
         //init
-        gripperL.setPosition(.9);
-        gripperR.setPosition(.9);
+        openGrippers();
 
         waitForStart();
         runtime.reset();
@@ -74,15 +75,24 @@ public class Tester extends LinearOpMode {
         while (opModeIsActive()) {
 
             if(gamepad2.a){
-                gripperL.setPosition(.1);
-                gripperR.setPosition(.1);
+                closeGrippers();
             }
             else{
-                gripperL.setPosition(.9);
-                gripperR.setPosition(.9);
+                openGrippers();
             }
 
+            if(gamepad2.b){
+                XrailMove(.3,5);
+            }
 
+            if(gamepad2.y){
+                XrailMove(.3,5);
+            }
+            if(gamepad2.x){
+                XrailMove(.3,5);
+            }
+
+            //joystick Xrail
             Xrail.setPower(gamepad2.left_stick_y * .8);
 
             //drive
@@ -92,6 +102,38 @@ public class Tester extends LinearOpMode {
             FRmotor.setPower(((gamepad1.right_trigger - gamepad1.left_trigger) * TurnSpeed) - (gamepad1.left_stick_y + (-gamepad1.right_stick_x))*(drivespeed));
             //end of drive
         }
+
+    }
+    public void XrailMove(double power, double Inches) {
+        double TicksPerRevolution = 537.7;
+        // diameter Millimeters
+        double DiameterMM = 38.1;
+        // diameter Inches
+        double DiameterIn = DiameterMM / 25.4; //3.7795275590551185 Inches
+        // Circumference
+        double Circumference = DiameterIn * PI; //11.873736013567724 Inches
+        // Finding ticks per inch
+        double TicksPerInch = TicksPerRevolution / Circumference; //45.28482015985433 Inches
+
+        int distance = (int) (Inches * TicksPerInch);
+
+        Xrail.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER); //resetting the encoder to clear it
+        Xrail.setTargetPosition(distance); //giving the encoder a target position
+        Xrail.setMode(DcMotorEx.RunMode.RUN_TO_POSITION); //telling it to go to that position
+        Xrail.setPower(power); //giving it the power
+
+        while (Xrail.isBusy()) {
+        }
+        Xrail.setPower(0); //just for when its done
+        Xrail.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+    }
+    public void closeGrippers(){
+        gripperL.setPosition(.1);
+        gripperR.setPosition(.1);
+    }
+    public void openGrippers(){
+        gripperL.setPosition(.9);
+        gripperR.setPosition(.9);
     }
 }
 

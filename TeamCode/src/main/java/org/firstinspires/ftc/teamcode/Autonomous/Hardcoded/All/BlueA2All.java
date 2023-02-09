@@ -218,17 +218,17 @@ public class BlueA2All extends LinearOpMode {
             //trajectory
             XrailMove(.3,3);
             forward(.4,2);
-            Sright(.3,12.4);
-            forward(.4,5.1);
+            Sright(.3,14.75);
+            forward(.4,2.6);
             sleep(500);
-            XrailMove(.5,10);
+            XrailMove(.5,11);
             sleep(100);
-            forward(.2,1.5);
+            forward(.2,1.1);
             grippers(.9);
             sleep(500);
             XrailMove(.3,-8);
             sleep(100);
-            backwards(.2,1);
+            backwards(.2,1.2);
             Sleft(.3,10);
             forward(.4,22);
             Sright(.3,22);
@@ -237,35 +237,35 @@ public class BlueA2All extends LinearOpMode {
             //trajectory
             XrailMove(.3,3);
             forward(.4,2);
-            Sright(.3,12.4);
-            forward(.4,5.1);
+            Sright(.3,14.75);
+            forward(.4,2.6);
             sleep(500);
-            XrailMove(.5,10);
+            XrailMove(.5,11);
             sleep(100);
-            forward(.2,1.5);
+            forward(.2,1.1);
             grippers(.9);
             sleep(500);
             XrailMove(.3,-8);
             sleep(100);
-            backwards(.2,1);
-            Sleft(.3,10);
+            backwards(.2,1.2);
+            Sleft(.3,11);
             forward(.4,22);
 
         } else if (tagOfInterest.id == RIGHT) {
             //trajectory
             XrailMove(.3,3);
             forward(.4,2);
-            Sright(.3,12.4);
-            forward(.4,5.1);
+            Sright(.3,14.75);
+            forward(.4,2.6);
             sleep(500);
-            XrailMove(.5,10);
+            XrailMove(.5,11);
             sleep(100);
-            forward(.2,1.5);
+            forward(.2,1.1);
             grippers(.9);
             sleep(500);
             XrailMove(.3,-8);
             sleep(100);
-            backwards(.2,1);
+            backwards(.2,1.2);
             Sleft(.3,10);
             forward(.4,22);
             Sleft(.3,22);
