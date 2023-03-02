@@ -24,6 +24,7 @@ package org.firstinspires.ftc.teamcode.Autonomous.Hardcoded.Park;
 import static java.lang.Math.PI;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -37,7 +38,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-
+@Disabled
 @Autonomous(name="RedLeftPark",group="auto")
 public class RedF2Park extends LinearOpMode {
     //not camera stuff

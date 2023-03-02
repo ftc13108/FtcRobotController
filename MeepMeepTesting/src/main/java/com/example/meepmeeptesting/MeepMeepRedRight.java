@@ -68,7 +68,7 @@ public class MeepMeepRedRight {
 
                                 //end of program
 
-                                .waitSeconds(3)
+                                .waitSeconds(2)
 
                                 .build()
 

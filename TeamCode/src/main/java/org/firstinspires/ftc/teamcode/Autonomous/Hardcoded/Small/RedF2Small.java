@@ -19,12 +19,11 @@
  * SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode.Autonomous.Hardcoded.All;
+package org.firstinspires.ftc.teamcode.Autonomous.Hardcoded.Small;
 
 import static java.lang.Math.PI;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -38,8 +37,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name="RedRightAll",group="auto")
-public class RedF5All extends LinearOpMode {
+@Autonomous(name="RedLeftSmall",group="auto")
+public class RedF2Small extends LinearOpMode {
     //not camera stuff
     DcMotorEx BLmotor, BRmotor, FLmotor, FRmotor, Xrail;
     Servo gripperL, gripperR;
@@ -207,69 +206,64 @@ public class RedF5All extends LinearOpMode {
         }
 
         /* Actually do something useful */
-        if (tagOfInterest == null){
+        if (tagOfInterest == null || tagOfInterest.id == LEFT){
+
             //trajectory
-            forward(.2,4);
-            Sleft(.2,6);
-        } else if(tagOfInterest.id == LEFT)
-        {
-            //trajectory
-            XrailMove(.3,3);
-            forward(.4,2);
-            Sright(.3,14.25);
-            forward(.4,2.6);
-            sleep(500);
-            XrailMove(.5,11);
-            sleep(100);
-            forward(.2,1);
-            grippers(.9);
-            sleep(500);
-            XrailMove(.3,-8);
-            sleep(100);
-            backwards(.2,1.2);
-            Sleft(.3,11);
-            forward(.4,22);
-            Sright(.3,22);
+            XrailMove(.3,3); //moves up to stop the cone from dragging
+            forward(.4,2); //goes forward before strafing to junction
+            Sleft(.3,13.35); //strafes to junction
+            forward(.4,2.5); //goes forward to get closer to the junction
+            sleep(500); //pause
+            XrailMove(.5,13.5); //slide moves up to place cone
+            sleep(100); //small pause
+            forward(.2,3); ////inches a bit closer
+            grippers(.9,.5); //releases grip
+            sleep(500); //pauses
+            XrailMove(.3,-8); //lowers x rail for cone stack
+            sleep(100); //pause
+            backwards(.2,2.3); //backs up from junction
+            Sright(.3,10); //strafes back before going to back
+            forward(.4,22); //goes forward to middle tile
+            Sright(.3,22); //strafes to parking spot
 
         } else if (tagOfInterest.id == MIDDLE) {
             //trajectory
-            XrailMove(.3,3);
-            forward(.4,2);
-            Sright(.3,14.25);
-            forward(.4,2.6);
-            sleep(500);
-            XrailMove(.5,11);
-            sleep(100);
-            forward(.2,1);
-            grippers(.9);
-            sleep(500);
-            XrailMove(.3,-8);
-            sleep(100);
-            backwards(.2,1.2);
-            Sleft(.3,11);
-            forward(.4,22);
+            XrailMove(.3,3); //moves up to stop the cone from dragging
+            forward(.4,2); //goes forward before strafing to junction
+            Sleft(.3,13.35); //strafes to junction
+            forward(.4,2.5); //goes forward to get closer to the junction
+            sleep(500); //pause
+            XrailMove(.5,13.5); //slide moves up to place cone
+            sleep(100); //small pause
+            forward(.2, 3); ////inches a bit closer
+            grippers(.9,.5); //releases grip
+            sleep(500); //pauses
+            XrailMove(.3,-8); //lowers x rail for cone stack
+            sleep(100); //pause
+            backwards(.2,2.3); //backs up from junction
+            Sright(.3,10); //strafes back before going to back
+            forward(.4,22); //goes forward to middle tile
 
         } else if (tagOfInterest.id == RIGHT) {
             //trajectory
-            XrailMove(.3,3);
-            forward(.4,2);
-            Sright(.3,14.25);
-            forward(.4,2.6);
-            sleep(500);
-            XrailMove(.5,11);
-            sleep(100);
-            forward(.2,1);
-            grippers(.9);
-            sleep(500);
-            XrailMove(.3,-8);
-            sleep(100);
-            backwards(.2,1.2);
-            Sleft(.3,11);
-            forward(.4,22);
-            Sleft(.3,20);
+            XrailMove(.3,3); //moves up to stop the cone from dragging
+            forward(.4,2); //goes forward before strafing to junction
+            Sleft(.3,13.35); //strafes to junction
+            forward(.4,2.5); //goes forward to get closer to the junction
+            sleep(500); //pause
+            XrailMove(.5,13.5); //slide moves up to place cone
+            sleep(100); //small pause
+            forward(.2,3); ////inches a bit closer
+            grippers(.9,.5); //releases grip
+            sleep(500); //pauses
+            XrailMove(.3,-8); //lowers x rail for cone stack
+            sleep(100); //pause
+            backwards(.2,2.3); //backs up from junction
+            Sright(.3,10); //strafes back before going to back
+            forward(.4,22); //goes forward to middle tile
+            Sleft(.3,20); //strafes to parking spot
 
         }
-
 
     }
 
@@ -626,6 +620,27 @@ public class RedF5All extends LinearOpMode {
         BRmotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         BLmotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
     }
+    /*
+    public void XrailMove(double power, double Revolutions) {
+        int distance = (int) (Revolutions * TicksPerRevolution);
+
+        Xrail.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        Xrail.setTargetPosition(distance);
+        Xrail.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        Xrail.setPower(power);
+
+        while (Xrail.isBusy()) {
+        }
+        Xrail.setPower(0);
+        Xrail.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+    }
+
+     */
+
+    public void grippers(double positionL, double positionR){
+        gripperL.setPosition(positionL);
+        gripperR.setPosition(positionR);
+    }
     public void XrailMove(double power, double Inches) {
         double TicksPerRevolution = 537.7;
         // diameter Millimeters
@@ -648,11 +663,6 @@ public class RedF5All extends LinearOpMode {
         }
         Xrail.setPower(0);
         Xrail.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-    }
-
-    public void grippers(double position){
-        gripperL.setPosition(position);
-        gripperR.setPosition(position);
     }
 
 

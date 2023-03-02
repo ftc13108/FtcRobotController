@@ -22,7 +22,7 @@ public class Main extends LinearOpMode{
     Servo gripperR;
 
     //speed variables
-    double TurnSpeed = .5;
+    double TurnSpeed = .7;
     double drivespeed = .7;
 
     //servo positions
@@ -61,7 +61,7 @@ public class Main extends LinearOpMode{
 
         //init
         gripperL.setPosition(.9);
-        gripperR.setPosition(.9);
+        gripperR.setPosition(.5);
 
         waitForStart();
         runtime.reset();
@@ -74,17 +74,17 @@ public class Main extends LinearOpMode{
             }
             else{
                 gripperL.setPosition(.9);
-                gripperR.setPosition(.9);
+                gripperR.setPosition(.5);
             }
 
 
-            Xrail.setPower(gamepad2.left_stick_y * .8);
+            Xrail.setPower(gamepad2.left_stick_y * 1);
 
             //drive
-            BLmotor.setPower(((gamepad1.right_trigger - gamepad1.left_trigger) * TurnSpeed) + (gamepad1.left_stick_y + gamepad1.right_stick_x)*(drivespeed));
-            FLmotor.setPower(((gamepad1.right_trigger - gamepad1.left_trigger) * TurnSpeed) + (gamepad1.left_stick_y - gamepad1.right_stick_x)*(drivespeed));
-            BRmotor.setPower(((gamepad1.right_trigger - gamepad1.left_trigger) * TurnSpeed) - (gamepad1.left_stick_y - gamepad1.right_stick_x)*(drivespeed));
-            FRmotor.setPower(((gamepad1.right_trigger - gamepad1.left_trigger) * TurnSpeed) - (gamepad1.left_stick_y + gamepad1.right_stick_x)*(drivespeed));
+            BLmotor.setPower(((gamepad1.right_trigger - gamepad1.left_trigger) * (TurnSpeed)) + (gamepad1.left_stick_y + gamepad1.right_stick_x)*(drivespeed));
+            FLmotor.setPower(((gamepad1.right_trigger - gamepad1.left_trigger) * (TurnSpeed)) + (gamepad1.left_stick_y - gamepad1.right_stick_x)*(drivespeed));
+            BRmotor.setPower(((gamepad1.right_trigger - gamepad1.left_trigger) * (TurnSpeed)) - (gamepad1.left_stick_y - gamepad1.right_stick_x)*(drivespeed));
+            FRmotor.setPower(((gamepad1.right_trigger - gamepad1.left_trigger) * (TurnSpeed)) - (gamepad1.left_stick_y + gamepad1.right_stick_x)*(drivespeed));
             //end of drive
         }
     }

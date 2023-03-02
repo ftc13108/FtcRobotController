@@ -29,7 +29,7 @@ public class Tester extends LinearOpMode {
     Servo gripperR;
 
     //speed variables
-    double TurnSpeed = .5;
+    double TurnSpeed = .7;
     double drivespeed = .7;
 
     //servo positions
@@ -42,7 +42,6 @@ public class Tester extends LinearOpMode {
         BRmotor = hardwareMap.get(DcMotorEx.class, "BRmotor");
         FRmotor = hardwareMap.get(DcMotorEx.class, "FRmotor");
         Xrail = hardwareMap.get(DcMotorEx.class, "Xrail");
-
 
 
         BRmotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -59,51 +58,39 @@ public class Tester extends LinearOpMode {
         Xrail.setDirection(DcMotorEx.Direction.REVERSE);
 
         //getting servos
-        gripperL = hardwareMap.get(Servo.class,"gripperL");
-        gripperR = hardwareMap.get(Servo.class,"gripperR");
+        gripperL = hardwareMap.get(Servo.class, "gripperL");
+        gripperR = hardwareMap.get(Servo.class, "gripperR");
 
         //servo directions
         gripperR.setDirection(Servo.Direction.FORWARD);
         gripperL.setDirection(Servo.Direction.REVERSE);
 
         //init
-        openGrippers();
+        gripperL.setPosition(.9);
+        gripperR.setPosition(.5);
 
         waitForStart();
         runtime.reset();
 
         while (opModeIsActive()) {
 
-            if(gamepad2.a){
-                closeGrippers();
+            if (gamepad2.a) {
+                gripperL.setPosition(.1);
+                gripperR.setPosition(.1);
+            } else {
+                gripperL.setPosition(.9);
+                gripperR.setPosition(.5);
             }
-            else{
-                openGrippers();
-            }
-
-            if(gamepad2.b){
-                XrailMove(.3,5);
-            }
-
-            if(gamepad2.y){
-                XrailMove(.3,5);
-            }
-            if(gamepad2.x){
-                XrailMove(.3,5);
-            }
-
-            //joystick Xrail
-            Xrail.setPower(gamepad2.left_stick_y * .8);
 
             //drive
-            BLmotor.setPower(((gamepad1.right_trigger - gamepad1.left_trigger) * TurnSpeed) + (gamepad1.left_stick_y + (-gamepad1.right_stick_x))*(drivespeed));
-            FLmotor.setPower(((gamepad1.right_trigger - gamepad1.left_trigger) * TurnSpeed) + (gamepad1.left_stick_y - (-gamepad1.right_stick_x))*(drivespeed));
-            BRmotor.setPower(((gamepad1.right_trigger - gamepad1.left_trigger) * TurnSpeed) - (gamepad1.left_stick_y - (-gamepad1.right_stick_x))*(drivespeed));
-            FRmotor.setPower(((gamepad1.right_trigger - gamepad1.left_trigger) * TurnSpeed) - (gamepad1.left_stick_y + (-gamepad1.right_stick_x))*(drivespeed));
+            BLmotor.setPower(((gamepad1.right_trigger - gamepad1.left_trigger) * (TurnSpeed)) + (gamepad1.left_stick_y - gamepad1.right_stick_x) * (drivespeed));
+            FLmotor.setPower(((gamepad1.right_trigger - gamepad1.left_trigger) * (TurnSpeed)) + (gamepad1.left_stick_y + gamepad1.right_stick_x) * (drivespeed));
+            BRmotor.setPower(((gamepad1.right_trigger - gamepad1.left_trigger) * (TurnSpeed)) - (gamepad1.left_stick_y + gamepad1.right_stick_x) * (drivespeed));
+            FRmotor.setPower(((gamepad1.right_trigger - gamepad1.left_trigger) * (TurnSpeed)) - (gamepad1.left_stick_y - gamepad1.right_stick_x) * (drivespeed));
             //end of drive
         }
-
     }
+
     public void XrailMove(double power, double Inches) {
         double TicksPerRevolution = 537.7;
         // diameter Millimeters
@@ -117,26 +104,10 @@ public class Tester extends LinearOpMode {
 
         int distance = (int) (Inches * TicksPerInch);
 
-        Xrail.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER); //resetting the encoder to clear it
-        Xrail.setTargetPosition(distance); //giving the encoder a target position
-        Xrail.setMode(DcMotorEx.RunMode.RUN_TO_POSITION); //telling it to go to that position
-        Xrail.setPower(power); //giving it the power
+        Xrail.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        Xrail.setTargetPosition(distance);
+        Xrail.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        Xrail.setPower(power);
 
-        while (Xrail.isBusy()) {
-        }
-        Xrail.setPower(0); //just for when its done
-        Xrail.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-    }
-    public void closeGrippers(){
-        gripperL.setPosition(.1);
-        gripperR.setPosition(.1);
-    }
-    public void openGrippers(){
-        gripperL.setPosition(.9);
-        gripperR.setPosition(.9);
     }
 }
-
-
-
-
