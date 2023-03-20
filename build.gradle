@@ -5,14 +5,24 @@
  */
 
 buildscript {
+    ext.kotlin_version = '1.8.0'
+
     repositories {
         mavenCentral()
         google()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.2.0'
+
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+
+
     }
 }
+
+
 
 // This is now required because aapt2 has to be downloaded from the
 // google() repository beginning with version 3.2 of the Android Gradle Plugin
